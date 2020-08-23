@@ -1,0 +1,46 @@
+# macOS/Linux
+python3 -m venv env -> criar uma maquina irtual com Virtualenv
+
+# Windows
+python -m venv env -> criar uma maquina irtual com Virtualenv
+
+# python -m pip install django -> instalar o Django
+
+# django-admin startproject "nome do projeto" . -> cria um novo projeto, coloque o nome sem as aspas
+
+# python manage.py runserver -> roda o servidor local 
+
+# python manage.py startapp "nome" -> cria o Django app
+
+--------------------------------------------------------------------------------------------------------
+
+O QUE CADA ARQUIVO FAZ
+
+# DJANGO-ADMIN.PY - responsavel por permitir ultilizar o django na linha de comnado para tarefas administrativas (ele em como Django)
+
+# MANEGE.PY - é um wapper que delega tarefas para o django-admin.py, também é responsavel por colocar o projeto no sys.paths, além de 
+definir a variave lde ambiente DJANFO_SETTINGS_MODULE que esta apontada para o settings.py
+
+# WSGI.PY - WEB SERVER GATEWAY INTERFACE (interface de porta de entrada do servidor web) - plataforma padrão que serve interface para 
+o servidor web e aplicação web, quando usamos startproject ou o runserver inicia uma configuração WSGI, no caso do startproject para
+criar seu projeto e no runserver faz iniciar o servidor da aplicação local com o WSGI_APPLICATION
+
+# SETTINGS.PY - responsavel por configurar dua aplicação Django, definindo coisas como, acesso ao banco, templates, cache e etc...
+
+# URLS.PY - é uma schema de url, responsavel por gerenciar as todas da aplicação
+
+# VIEWS.PY - responavel por processa e reotn uma responda via HTTP para o cliente que solicitou a requisição 
+
+# MODELS.PY - responsavel por definir o modelo de dados inteiramente em python, faz abstração dos objetos do banco , transformando todas
+as tabelas em classes e o acesso é feito em python, o Django depois faz a transformação para SQL
+
+# ADMIN.PY - é a interface administrativa gerada pelo django, ele é o metadados que estão nos models e fornece uma interface pronta para 
+a manipulação de dados
+
+# STATIC - Responsavel por conter os arquivos estaticos, css's, Js's, imagens... da aplicação
+
+# TEMPLATE - Responsavel por conter os arquivos HTML's da aplicação 
+
+# APPS.PY -
+
+# TESTS.PY - 
