@@ -10,7 +10,17 @@ python -m venv env -> criar uma maquina irtual com Virtualenv
 
 # python manage.py runserver -> roda o servidor local 
 
-# python manage.py startapp "nome" -> cria o Django app
+# python manage.py startapp "nome" . -> cria o Django app
+
+# python manage.py migrate -> gera tabelas padroes automaticas 
+
+# python manage.py createsuperuser --username admin -> criando uma adm no admin
+
+# python manage.py makemigrations "nome pasta" -> migra as tabelas
+
+# python manage.py sqlmigrate "nome pasta" "nome arquivo'-> migra apenas para a pasta selecionada 
+
+# python manage.py migrate "nome pasta" "nome arquivo'-> efetuar a migração apenas para a pasta selecionada 
 
 --------------------------------------------------------------------------------------------------------
 
@@ -44,3 +54,27 @@ a manipulação de dados
 # APPS.PY -
 
 # TESTS.PY - 
+
+http://127.0.0.1:53821/browser/
+
+5432
+
+
+class Hq(models.Model): 
+
+    title = models.CharField(max_length=150)
+    author = models.CharField(max_length=100)
+    publishing = models.CharField(max_length=100)
+
+ 
+'api_rest',
+'rest_framework',
+
+
+'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'restDB',
+        'USER': 'postgres',
+        'PASSWORD': '123456',
+        'HOST': 'localhost'
+    }
