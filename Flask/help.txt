@@ -1,0 +1,7 @@
+pip install -r requirements.txt -> instala para pegar todas as linhas dentro dos requisitos
+
+"nome" > requirements.txt -> instala
+
+python main.py -> roda aplicação 
+
+python test.py -. roda o arquivo de test, mas é necessario rodar aplicação primeiro 
