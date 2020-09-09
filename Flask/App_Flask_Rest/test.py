@@ -12,5 +12,21 @@ for i in range (len(data)):
     print(response.json())
 
 input()
+response = requests.patch(BASE + "video/1", {'link':'DEF'})
+print(response.json())
+
+input()
 response = requests.get(BASE + "video/1")
+print(response.json())
+
+'''input()
+response = requests.get(BASE + "video/5")
+print(response.json())'''
+
+input()
+response = requests.delete(BASE + "video/1")
+print(response)
+
+input()
+response = requests.get(BASE + "video")
 print(response.json())
