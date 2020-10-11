@@ -92,9 +92,30 @@ class Pessoas(Resource):
         }
         return (response)
 
+class Atividades(Resource):
+
+    def get(self):
+        atividades = models.Atividades.query.all()
+        response = [{'id':i.id, 'nome':i.nome, 'pessoa':i.pessoa.nome} for i in atividades]
+        return (response)
+
+    def post(self):
+        dados = request.json
+        pessoa = models.Pessoas.query.filter_by(nome=dados['pessoa']).first()
+        atividade = models.Atividades(nome=dados['nome'], pessoa=pessoa)
+        atividade.save()
+
+        response = {
+            'id':atividade.id,
+            'nome':atividade.nome,
+            'pessoa':atividade.pessoa.nome
+        }
+        return (response)
+
 
 api.add_resource(Pessoa, '/pessoa/<string:nome>/')
 api.add_resource(Pessoas, '/pessoa/')
+api.add_resource(Atividades, '/atividade/')
 
 if __name__ == '__main__':
     app.run(debug=True)
