@@ -1,0 +1,52 @@
+https://tutorial.djangogirls.org/pt/django_installation/
+https://www.zup.com.br/blog/configurando-vscode-trabalhar-ambiente-virtual-python-
+https://www.zup.com.br/blog/configurando-vscode-trabalhar-ambiente-virtual-python-pytes
+
+--------
+para instalar a virtualização:
+
+1. abra o cmd (se for windows) na raiz do projeto
+2. na raiz do projeto execute sem as aspas "python -m venv nome_da_env"
+3. entre em  nome_da_env/Scripts/
+4. execte no cmd sem as aspas "activate" para ativar e "deactivate" para desativar
+
+--------
+baixar as dependencias do projeto de uma só vez:
+
+1. crie um documendo com o nome "requirements.txt" sem as aspas na raiz do projeto
+2. dentro deste arquivo coloque o nome das dependecias que deseja colocar no projeto
+3. execute o comando sem as aspas "pip install -r requirements.txt"
+
+--------
+criar novo projeto django:
+
+1. na raiz do projeto execute o comando sem as aspas "django-admin startproject nome_do_projeto"
+2. depois entre do diretorio do "nome_do_projeto"
+3. no "nome_do_projeto" execute o comando sem as aspas "django-admin startapp nome_do_app"
+4. volte ao diretorio raiz
+
+-------
+Agora sincronize seu banco de dados pela primeira vez:
+
+1. raiz do nome_do_projeto execute o comando sem as aspas "python manage.py migrate"
+
+-------
+criaremos um usuário inicial:
+
+1. execute o comando sem as aspas "python manage.py createsuperuser --email admin@example.com --username admin"
+2. digite o password
+
+-------
+para rodar o projeto:
+
+1. lá até o diretorio onde esta o arquivo manage.py
+2. execute o comando sem as aspas "python manage.py runserver"
+3. por padrão o python abre na porta 8000
+4. caso queria fazer o login com o SuperUser use a rota http://localhost:8000/admin/login
+
+-------
+para fazer migrações no banco:
+
+1. abra o cmd e vá até o diretorio do "nome_do_projeto"
+2. execute o comando sem as aspas "python manage.py makemigrations"
+3. depois execute o comando sem as aspas "python manage.py migrate"
