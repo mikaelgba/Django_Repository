@@ -6,5 +6,5 @@ class HQSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HQ
-        fields = ['id','name_hq','author','publishing_company']
-
+        #fields = ['id','name_hq','author','publishing_company']
+        fields = '__all__'

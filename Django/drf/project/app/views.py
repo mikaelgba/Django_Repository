@@ -1,56 +1,62 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+
 from rest_framework.parsers import JSONParser
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.views import APIView
+
 from .models import HQ
 from .Serializers import HQSerializer
 
-@csrf_exempt
-def HQ_list(request):
+class HQ_list(APIView):
 
-    if( request.method == 'GET' ):
+    def get (self, request):
 
         hqs = HQ.objects.all()
         serializer = HQSerializer(hqs, many=True)
-        return JsonResponse(serializer.data, safe = False)
+        return Response(serializer.data)
 
-    elif( request.method == 'POST' ):
+    def post (self, request):
 
-        data = JSONParser().parse(request)
-        serializer = HQSerializer(data = data)
+        serializer = HQSerializer(data = request.data)
 
         if (serializer.is_valid()):
-            
             serializer.save()
-            return JsonResponse(serializer.data, status = 201)
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
 
-        return JsonResponse(serializer.errors, status = 400)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-@csrf_exempt
-def HQ_detail(request, pk):
-
-    try:
-        hq = HQ.objects.get(pk = pk)
+class HQ_details(APIView):
     
-    except(HQ.DoesNotExist):
-        return Http.Response(status = 404)
+    def get_object(self, id):
 
-    if( request.method == 'GET' ):
+        try:
+            return HQ.objects.get(id = id)
+    
+        except(HQ.DoesNotExist):
+            return HttpResponse(status = status.HTTP_404_NOT_FOUND)
 
+    def get(self, request, id):
+
+        hq = self.get_object(id)
         serializer = HQSerializer(hq)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data)
 
-    elif( request.method == 'PUT' ):
+    def put(self, request, id):
 
-        data = JSONParser().parse(request)
-        serializer = HQSerializer(hq, data = data)
+        hq = self.get_object(id)
+        serializer = HQSerializer(hq, data = request.data)
 
         if (serializer.is_valid()):
             serializer.save()
-            return JsonResponse(serializer.data)
+            return Response(serializer.data)
 
-        return JsonResponse(serializer.errors, status = 400)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-    elif( request.method == 'DELETE' ):
+    def delete(self, request, id):
+        hq = self.get_object(id)
         hq.delete()
-        return Http.Response(status = 204)
+        return Response(status = status.HTTP_NO_CONTENT)
