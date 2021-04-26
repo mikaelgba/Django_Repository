@@ -1,6 +1,13 @@
+# INSTALAÇÃO E AMBIENTE VIRTUAL 
 https://tutorial.djangogirls.org/pt/django_installation/
 https://www.zup.com.br/blog/configurando-vscode-trabalhar-ambiente-virtual-python-
 https://www.zup.com.br/blog/configurando-vscode-trabalhar-ambiente-virtual-python-pytes
+
+# API GENERICS VIEW
+https://www.django-rest-framework.org/api-guide/generic-views/
+
+# Autetificação
+https://www.django-rest-framework.org/api-guide/authentication/
 
 --------
 para instalar a virtualização:

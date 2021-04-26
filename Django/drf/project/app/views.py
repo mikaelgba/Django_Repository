@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
 
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
@@ -10,6 +11,7 @@ from rest_framework.views import APIView
 from rest_framework import generics, mixins
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
 
 from .models import HQ
 from .Serializers import HQSerializer
@@ -37,8 +39,7 @@ class HQ_details(APIView):
     
     def get_object(self, id):
 
-        try:
-            return HQ.objects.get(id = id)
+        try: return HQ.objects.get(id = id)
     
         except(HQ.DoesNotExist):
             return HttpResponse(status = status.HTTP_404_NOT_FOUND)
@@ -71,17 +72,15 @@ class GenericApiView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Crea
     serializer_class = HQSerializer
     queryset = HQ.objects.all()
     lookup_field = "id"
-    #authentication_classes = [SessionAuthentication, BasicAuthentication]
+    #authentication_classes = [SessionAuthentication, BasicAuthentication] AUTETIFICAÇÃO
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, id = None):
 
-        if id:
-            return self.retrieve(request)
+        if id: return self.retrieve(request)
 
-        else:
-            return self.list(request)
+        else: return self.list(request)
 
     def post(self, request):
         return self.create(request)
@@ -91,3 +90,59 @@ class GenericApiView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Crea
 
     def delete(self, request, id=None):
         return self.destroy(request, id)
+
+
+# API ViewSet
+class HqViewSet(viewsets.ViewSet):
+
+    def list(self, request):
+
+        hqs = HQ.objects.all()
+        serializer = HQSerializer(hqs, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+
+        serializer = HQSerializer(data = request.data)
+        if (serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk=None):
+
+        queryset = HQ.objects.all()
+        hq =  get_object_or_404(queryset, pk = pk)
+        serializer = HQSerializer(hq)
+        return Response(serializer.data)
+
+    def update(self, request, pk=None):
+
+        hq = HQ.objects.get(pk = pk)
+        serializer = HQSerializer(hq, data = request.data)
+
+        if (serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+        hq = HQ.objects.get(pk = pk)
+        hq.delete()
+        return Response(status = status.HTTP_NO_CONTENT)
+
+# API Generic ViewSet
+class HqGenericViwSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
+
+    serializer_class = HQSerializer
+    queryset = HQ.objects.all()
+
+
+# API Model Viewset
+class HqModalViwSet(viewsets.ModelViewSet):
+
+    serializer_class = HQSerializer
+    queryset = HQ.objects.all()
+
